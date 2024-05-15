@@ -5,21 +5,10 @@ import os
 import boto3
 
 #Connect with codegpt
-
-ssm = boto3.client("ssm", "us-east-1")
-
-# Creación del cliente SSM
-ssm = boto3.client("ssm", region_name="us-east-1")
-# Obteniendo múltiples parámetros
-parameters = ssm.get_parameters(
-    Names=["CODEGPT_API_KEY", "CODEGPT_AGENT_ID", "CODEGPT_ORG_ID"],
-    WithDecryption=True
-)
-
 # Extrayendo valores
-api_key = next(item for item in parameters['Parameters'] if item['Name'] == 'CODEGPT_API_KEY')['Value']
-agent_id = next(item for item in parameters['Parameters'] if item['Name'] == 'CODEGPT_AGENT_ID')['Value']
-org_id = next(item for item in parameters['Parameters'] if item['Name'] == 'CODEGPT_ORG_ID')['Value']
+api_key = os.getenv('CODEGPT_API_KEY')
+agent_id = os.getenv('CODEGPT_AGENT_ID')
+org_id = os.getenv('CODEGPT_ORG_ID')
 
 st.set_page_config(layout="centered")
 
